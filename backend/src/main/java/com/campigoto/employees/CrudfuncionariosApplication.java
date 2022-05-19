@@ -1,4 +1,4 @@
-package com.campigoto.crudfuncionarios;
+package com.campigoto.employees;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
