@@ -3,14 +3,18 @@ package com.campigoto.employees.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.campigoto.employees.dto.AddressDTO;
 import com.campigoto.employees.dto.EmployeeDTO;
 import com.campigoto.employees.entities.Employee;
 import com.campigoto.employees.mappers.EmployeeMapper;
 import com.campigoto.employees.repositories.EmployeeRepository;
+import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class EmployeeService {
@@ -30,24 +34,42 @@ public class EmployeeService {
         return mapper.toDTO(employee);
     }
 
+    @Transactional(readOnly = true)
     public EmployeeDTO findById(Long id) {
         Employee employee = repository.findById(id).orElseThrow();
         return mapper.toDTO(employee);
     }
 
+    @Transactional(readOnly = true)
     public List<EmployeeDTO> findByCep(String cep) {
         return repository.findByCep(cep).stream().map(mapper::toDTO).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<EmployeeDTO> findAll() {
         return repository.findAll().stream().map(mapper::toDTO).collect(Collectors.toList());
     }
-
+/*
+    @Transactional
     public EmployeeDTO update(EmployeeDTO dto) {
         Employee employee = repository.save(mapper.toEntity(dto));
         return mapper.toDTO(employee);
     }
 
+    @Transactional
+	public EmployeeDTO update(Long id, EmployeeDTO dto) {
+		try {
+			Employee entity = repository.getOne(id);
+			copyDtoToEntity(dto, entity);
+			entity = repository.save(entity);
+			return new EmployeeDTO(entity);
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}		
+	}
+*/
+    @Transactional
     public EmployeeDTO updatePatch(EmployeeDTO dto) throws Exception {
         Employee employee = repository.findById(dto.getId()).orElseThrow();
 
@@ -98,7 +120,34 @@ public class EmployeeService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+    /*
+    @Transactional
+	public EmployeeDTO insert(EmployeeDTO dto) {
+        Employee employee = repository.save(mapper.toEntity(dto));
+        return mapper.toDTO(employee);
+	}
+    */
     
+    @Transactional
+	public EmployeeDTO insert(EmployeeDTO dto) {
+    	Employee entity = new Employee();
+    	mapper.toEntity(dto);
+	//	copyDtoToEntity(dto, entity);
+		entity = repository.save(entity);
+		return new EmployeeDTO(entity);
+	}
+
+	@Transactional
+	public EmployeeDTO update(Long id, EmployeeDTO dto) {
+		try {
+			Employee entity = repository.getById(id);
+	        Employee employee = repository.save(mapper.toEntity(dto));
+			return new EmployeeDTO(entity);
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}		
+	}
           
 }
 

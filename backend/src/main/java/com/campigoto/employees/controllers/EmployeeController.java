@@ -1,5 +1,6 @@
 package com.campigoto.employees.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.campigoto.employees.dto.EmployeeDTO;
 import com.campigoto.employees.services.EmployeeService;
@@ -41,17 +43,28 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDTO>> getAll() {
         return ResponseEntity.ok(service.findAll());
     }
-
+    
     @PostMapping
-    public ResponseEntity<EmployeeDTO> create(@Valid @RequestBody EmployeeDTO dto) throws Exception {
-        return ResponseEntity.ok(service.save(dto));
-    }
-
+	public ResponseEntity<EmployeeDTO> insert(@Valid @RequestBody EmployeeDTO dto) {
+		dto = service.insert(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(dto.getId()).toUri();
+		return ResponseEntity.created(uri).body(dto);
+	}
+    /*
     @PutMapping
     public ResponseEntity<EmployeeDTO> update(@Valid @RequestBody EmployeeDTO dto) {
         return ResponseEntity.ok(service.update(dto));
     }
+    */
+    
 
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @Valid @RequestBody EmployeeDTO dto) {
+		dto = service.update(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
+	
     @PatchMapping
     public ResponseEntity<EmployeeDTO> updatePatch(@RequestBody EmployeeDTO dto) throws Exception {
         return ResponseEntity.ok(service.updatePatch(dto));
