@@ -11,10 +11,9 @@ import javax.validation.constraints.Size;
 import com.campigoto.employees.entities.Employee;
 import com.campigoto.employees.entities.Sex;
 
+
 public class EmployeeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-
 
 	private Long id;
 	
@@ -24,7 +23,7 @@ public class EmployeeDTO implements Serializable {
 
 	
 	@Positive(message = "Idade deve ser um valor positivo")
-	private int age;
+	private Integer age;
 	
 
 	@Size(min = 8, max = 8, message = "Deve ter  8 caracteres")
@@ -42,7 +41,7 @@ public class EmployeeDTO implements Serializable {
     public EmployeeDTO() {
 	}
 
-	public EmployeeDTO(Long id,	String name, int age,String cep,Sex sex, String address, String district, String city, String state) {
+	public EmployeeDTO(Long id,	String name, Integer age,String cep,Sex sex, String address, String district, String city, String state) {
 		this.id = id;
 		this.name = name;
 		this.age = age;
@@ -84,11 +83,11 @@ public class EmployeeDTO implements Serializable {
 		this.name = name;
 	}
 
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 

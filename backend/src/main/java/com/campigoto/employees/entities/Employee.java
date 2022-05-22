@@ -6,6 +6,8 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,10 +17,11 @@ public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private int age;
+    private Integer age;
     private String cep;
 
     @Enumerated(EnumType.STRING)
@@ -32,7 +35,7 @@ public class Employee implements Serializable {
     public Employee() {
 	}
 
-	public Employee(Long id, String name, int age, String cep, Sex sex, String address, String district, String city,
+	public Employee(Long id, String name, Integer age, String cep, Sex sex, String address, String district, String city,
 			String state) {
 		super();
 		this.id = id;
@@ -66,7 +69,7 @@ public class Employee implements Serializable {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 

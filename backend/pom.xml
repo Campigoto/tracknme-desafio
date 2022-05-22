@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.campigoto</groupId>
-	<artifactId>crudfuncionarios</artifactId>
+	<artifactId>crudemployees</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Crudfuncionarios</name>
 	<description>Teste TracknMe</description>
