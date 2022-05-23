@@ -17,7 +17,6 @@ Para rodar o projeto execute:
 
 
 - O servidor irá iniciar em localhost na porta 8080 por padrão
-- Chama o  edpoint 
 
 - POST - Cadastrar um usuário
  
