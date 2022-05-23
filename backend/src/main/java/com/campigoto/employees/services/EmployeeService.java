@@ -14,7 +14,7 @@ import com.campigoto.employees.dto.EmployeeDTO;
 import com.campigoto.employees.entities.Employee;
 import com.campigoto.employees.mappers.EmployeeMapper;
 import com.campigoto.employees.repositories.EmployeeRepository;
-import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
+import com.campigoto.employees.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class EmployeeService {
@@ -49,26 +49,7 @@ public class EmployeeService {
     public List<EmployeeDTO> findAll() {
         return repository.findAll().stream().map(mapper::toDTO).collect(Collectors.toList());
     }
-/*
-    @Transactional
-    public EmployeeDTO update(EmployeeDTO dto) {
-        Employee employee = repository.save(mapper.toEntity(dto));
-        return mapper.toDTO(employee);
-    }
-
-    @Transactional
-	public EmployeeDTO update(Long id, EmployeeDTO dto) {
-		try {
-			Employee entity = repository.getOne(id);
-			copyDtoToEntity(dto, entity);
-			entity = repository.save(entity);
-			return new EmployeeDTO(entity);
-		}
-		catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException("Id not found " + id);
-		}		
-	}
-*/
+    
     @Transactional
     public EmployeeDTO updatePatch(EmployeeDTO dto) throws Exception {
         Employee employee = repository.findById(dto.getId()).orElseThrow();
@@ -108,7 +89,7 @@ public class EmployeeService {
     }
 
     private void getAddressIfNotInformed(EmployeeDTO dto) throws Exception {
-        if ((dto.getCep() != null && dto.getCep().isBlank()) && (dto.getAddress() == null || dto.getAddress().isEmpty())) {
+        if ((dto.getCep() != null && !dto.getCep().isBlank()) && (dto.getAddress() == null || dto.getAddress().isEmpty())) {
             AddressDTO address = viaCepService.findAddressByCep(dto.getCep());
             dto.setAddress(address.getAddress());
             dto.setCity(address.getCity());
@@ -120,28 +101,25 @@ public class EmployeeService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
-    /*
-    @Transactional
-	public EmployeeDTO insert(EmployeeDTO dto) {
-        Employee employee = repository.save(mapper.toEntity(dto));
-        return mapper.toDTO(employee);
-	}
-    */
     
     @Transactional
-	public EmployeeDTO insert(EmployeeDTO dto) {
-    	Employee entity = new Employee();
-    	mapper.toEntity(dto);
-	//	copyDtoToEntity(dto, entity);
-		entity = repository.save(entity);
+	public EmployeeDTO insert(EmployeeDTO dto) throws Exception {
+    	Employee entity = new Employee();   
+    	getAddressIfNotInformed(dto);
+    	entity = repository.save(mapper.toEntity(dto));
 		return new EmployeeDTO(entity);
 	}
 
 	@Transactional
-	public EmployeeDTO update(Long id, EmployeeDTO dto) {
+	public EmployeeDTO update(Long id, EmployeeDTO dto) throws Exception {
 		try {
 			Employee entity = repository.getById(id);
-	        Employee employee = repository.save(mapper.toEntity(dto));
+			
+			if (entity == null ) throw new Exception ("User not found");
+			 
+	    	getAddressIfNotInformed(dto);
+			entity = repository.save(mapper.toEntity(dto));
+			
 			return new EmployeeDTO(entity);
 		}
 		catch (EntityNotFoundException e) {

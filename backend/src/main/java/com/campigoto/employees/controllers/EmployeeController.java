@@ -45,28 +45,25 @@ public class EmployeeController {
     }
     
     @PostMapping
-	public ResponseEntity<EmployeeDTO> insert(@Valid @RequestBody EmployeeDTO dto) {
+	public ResponseEntity<EmployeeDTO> insert(@Valid @RequestBody EmployeeDTO dto) throws Exception {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
-    /*
-    @PutMapping
-    public ResponseEntity<EmployeeDTO> update(@Valid @RequestBody EmployeeDTO dto) {
-        return ResponseEntity.ok(service.update(dto));
-    }
-    */
     
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @Valid @RequestBody EmployeeDTO dto) {
+	public ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @Valid @RequestBody EmployeeDTO dto) throws Exception {
 		dto = service.update(id, dto);
+		if (id == null) throw new Exception("User not found");
 		return ResponseEntity.ok().body(dto);
 	}
 	
-    @PatchMapping
-    public ResponseEntity<EmployeeDTO> updatePatch(@RequestBody EmployeeDTO dto) throws Exception {
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<EmployeeDTO> updatePatch(@PathVariable Long id, @Valid@RequestBody EmployeeDTO dto) throws Exception {
+		dto = service.update(id, dto);
+		if (id == null) throw new Exception("User not found");
         return ResponseEntity.ok(service.updatePatch(dto));
     }
 
