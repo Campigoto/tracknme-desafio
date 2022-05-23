@@ -13,14 +13,14 @@
 ## Uso
 
 Para rodar o projeto execute:
-` `` ./mvnw spring-boot:run
-` ``
+` ``./mvnw spring-boot:run` ``
 
 
 - O servidor irá iniciar em localhost na porta 8080 por padrão
 - Chama o  edpoint 
 
 - POST - Cadastrar um usuário
+
 ![](backend/Doc/Post.png)
 
 - GET - Buscar um usuário específico pelo id dele
@@ -28,6 +28,8 @@ Para rodar o projeto execute:
 - GET - Buscar usuários por CEP
 - PUT - Atualizar a entidade funcionário
 - DELETE - Excluir funcionário
+
+![](Backend/doc/put.png)
 
 ```json
 [GET] http://localhost:8080/employee/2
