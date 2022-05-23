@@ -10,10 +10,16 @@
 ## Objetivo
 - Sistema usado para gerenciar os funcionários de uma empresa pequena.
 
-## Usage
+## Uso
+
+Para rodar o projeto execute:
+` `` 
+./mvnw spring-boot:run
+` ``
+
 
 - O servidor irá iniciar em localhost na porta 8080 por padrão
-- Chama o  edpoint (Eu usei o Postman)
+- Chama o  edpoint 
 
 - POST - Cadastrar um usuário
 ![](C:\Users\Particular\Pictures/Post.png)
