@@ -20,16 +20,28 @@ Para rodar o projeto execute:
 - Chama o  edpoint 
 
 - POST - Cadastrar um usuário
-
-![](backend/Doc/Post.png)
+- 
+![](backend/Doc/Post.PNG)
 
 - GET - Buscar um usuário específico pelo id dele
-- GET - Buscar todos os usuários cadastrados
-- GET - Buscar usuários por CEP
-- PUT - Atualizar a entidade funcionário
-- DELETE - Excluir funcionário
+-
+![](backend/Doc/Get_Especifico.PNG)
 
-![](Backend/doc/put.png)
+- GET - Buscar todos os usuários cadastrados
+- 
+![](backend/Doc/Get_Total.PNG)
+
+- GET - Buscar usuários por CEP
+- 
+![](backend/Doc/Get_CEP.PNG)
+
+- PUT - Atualizar a entidade funcionário
+- 
+![](backend/Doc/Put.PNG)
+
+- DELETE - Excluir funcionário
+- 
+![](Backend/doc/Delete.PNG)
 
 ```json
 [GET] http://localhost:8080/employee/2
