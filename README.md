@@ -22,7 +22,7 @@ Para rodar o projeto execute:
 - Chama o  edpoint 
 
 - POST - Cadastrar um usuário
-![](C:\Users\Particular\Pictures/Post.png)
+![](doc/Post.png)
 
 - GET - Buscar um usuário específico pelo id dele
 - GET - Buscar todos os usuários cadastrados
