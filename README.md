@@ -13,7 +13,7 @@
 ## Uso
 
 Para rodar o projeto execute:
-` ``./mvnw spring-boot:run` ``
+```./mvnw spring-boot:run```
 
 
 - O servidor irá iniciar em localhost na porta 8080 por padrão
