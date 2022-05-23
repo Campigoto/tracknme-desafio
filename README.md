@@ -13,8 +13,7 @@
 ## Uso
 
 Para rodar o projeto execute:
-` `` 
-./mvnw spring-boot:run
+` `` ./mvnw spring-boot:run
 ` ``
 
 
@@ -22,7 +21,7 @@ Para rodar o projeto execute:
 - Chama o  edpoint 
 
 - POST - Cadastrar um usuário
-![](./backend/doc/Post.png)
+![](backend/Doc/Post.png)
 
 - GET - Buscar um usuário específico pelo id dele
 - GET - Buscar todos os usuários cadastrados
