@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ import com.campigoto.employees.dto.EmployeeDTO;
 import com.campigoto.employees.entities.Employee;
 import com.campigoto.employees.mappers.EmployeeMapper;
 import com.campigoto.employees.repositories.EmployeeRepository;
+import com.campigoto.employees.services.exceptions.DatabaseException;
 import com.campigoto.employees.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -36,7 +39,7 @@ public class EmployeeService {
 
     @Transactional(readOnly = true)
     public EmployeeDTO findById(Long id) {
-        Employee employee = repository.findById(id).orElseThrow();
+        Employee employee = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
         return mapper.toDTO(employee);
     }
 
@@ -99,7 +102,15 @@ public class EmployeeService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+    	try {
+    		repository.deleteById(id);
+    		}
+    		catch (EmptyResultDataAccessException e) {
+    			throw new ResourceNotFoundException("Id not found " + id);
+    		}
+    		catch (DataIntegrityViolationException e) {
+    			throw new DatabaseException("Integrity violation");
+    		}
     }
     
     @Transactional

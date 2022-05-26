@@ -3,13 +3,14 @@ package com.campigoto.employess.services;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.campigoto.employees.dto.AddressDTO;
 import com.campigoto.employees.services.CepCacheService;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@ExtendWith(SpringExtension.class)
 public class CepCacheServiceTest {
 
 	@InjectMocks
