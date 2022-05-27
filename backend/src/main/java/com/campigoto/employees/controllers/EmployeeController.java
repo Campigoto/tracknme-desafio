@@ -35,7 +35,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/cep/{cep}")
-    public ResponseEntity<List<EmployeeDTO>> findByCep(@PathVariable("cep") String cep) {
+    public ResponseEntity<List<EmployeeDTO>> findByCep(@PathVariable("cep") String cep) throws Exception {
         return ResponseEntity.ok(service.findByCep(cep));
     }
 

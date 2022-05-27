@@ -39,13 +39,17 @@ public class EmployeeService {
 
     @Transactional(readOnly = true)
     public EmployeeDTO findById(Long id) {
-        Employee employee = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        Employee employee = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found "));
         return mapper.toDTO(employee);
     }
 
     @Transactional(readOnly = true)
-    public List<EmployeeDTO> findByCep(String cep) {
-        return repository.findByCep(cep).stream().map(mapper::toDTO).collect(Collectors.toList());
+    public List<EmployeeDTO> findByCep(String cep) throws Exception {
+    	List<EmployeeDTO> employees = repository.findByCep(cep).stream().map(mapper::toDTO).collect(Collectors.toList());
+    	
+    	if (employees.isEmpty()) throw new Exception("Cep not found ");
+    	
+        return employees;
     }
 
     @Transactional(readOnly = true)

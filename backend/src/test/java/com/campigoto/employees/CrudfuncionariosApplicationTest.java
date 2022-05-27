@@ -1,4 +1,4 @@
-package com.campigoto.employess;
+package com.campigoto.employees;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
